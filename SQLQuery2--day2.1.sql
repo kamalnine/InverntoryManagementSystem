@@ -203,7 +203,7 @@ select first_name from employee where department_id = 2 order by first_name;
 
 -- finding the age oof the employee
 
-select first_name,concat(DATEDIFF(year,date_of_birth,GETDATE()),'') as age from employee order by id;
+select first_name,concat(DATEDIFF(year,date_of_birth,GETDATE()),'') as age from employee where concat(DATEDIFF(year,date_of_birth,GETDATE()),'')>25;
 
 
 
