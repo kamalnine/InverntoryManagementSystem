@@ -88,3 +88,62 @@ select count(*) as 'Employee from IT department' from employee where department_
 
 select name,count(e.id) as 'Manager_Count' from department join employee e on  department.id = e.department_id where e.id in (select employee_id from manager) 
 group by name order by name;
+
+
+
+-- 1. Write a query to display the member id, member name, city and membership status who are all having life
+--time membership. Hint: Life time membership status is “Permanent”.
+select MEMBER_ID,MEMBER_NAME,CITY,MEMBERSHIP_STATUS FROM LMS_MEMBERS WHERE MEMBERSHIP_STATUS = 'Permanent';
+
+--3. Write a query to display the member id, member name who have taken the book with book code 'BL000002'
+select MEMBER_ID,MEMBER_NAME from LMS_MEMBERS where MEMBER_ID = (SELECT MEMBER_ID FROM LMS_BOOK_ISSUE WHERE BOOK_CODE = 'BL000002');
+
+--4. Write a query to display the book code, book title and author of the books whose author name begins with 'P'.
+
+SELECT BOOK_CODE,BOOK_TITLE,AUTHOR FROM LMS_BOOK_DETAILS WHERE AUTHOR LIKE 'P%';
+
+--5. Write a query to display the total number of Java books available in library with alias name ‘NO_OF_BOOKS’
+SELECT COUNT(*) AS 'NO_OF_BOOKS' FROM LMS_BOOK_DETAILS WHERE CATEGORY = 'JAVA'; 
+
+--6. Write a query to list the category and number of books in each category with alias name ‘NO_OF_BOOKS’
+SELECT CATEGORY,COUNT(*) AS 'NO_OF_BOOKS' FROM LMS_BOOK_DETAILS GROUP BY CATEGORY;
+
+--7. Write a query to display the number of books published by "Prentice Hall” with the alias name
+--“NO_OF_BOOKS”.
+SELECT COUNT(*) AS 'NO_OF_BOOKS' FROM  LMS_BOOK_DETAILS WHERE PUBLICATION='Prentice Hall'; 
+
+--8. Write a query to display the book code, book title of the books which are issued on the date 
+--"1st April 2012"
+select BOOK_CODE,BOOK_TITLE FROM LMS_BOOK_DETAILS WHERE BOOK_CODE IN (SELECT BOOK_CODE FROM LMS_BOOK_ISSUE WHERE DATE_ISSUE = '2012-04-01');
+
+--9. Write a query to display the member id, member name, date of registration and expiry date of the members
+--whose membership expiry date is before APR 2013.
+SELECT MEMBER_ID,MEMBER_NAME,DATE_REGISTER,DATE_EXPIRE FROM LMS_MEMBERS WHERE DATE_EXPIRE < '2013-04-01';
+
+--10. write a query to display the member id, member name, date of registration, membership status of the
+-- members who registered before "March 2012" and membership status is "Temporary" 
+SELECT MEMBER_ID,MEMBER_NAME,DATE_REGISTER,MEMBERSHIP_STATUS FROM LMS_MEMBERS WHERE DATE_REGISTER < '2012-03-01' AND MEMBERSHIP_STATUS = 'Permanent';
+
+--11. Write a query to display the member id, member name who’s City is CHENNAI or DELHI. Hint: Display the
+--member name in title case with alias name 'Name'.
+
+select MEMBER_ID,MEMBER_NAME as 'NAME' FROM LMS_MEMBERS WHERE CITY IN ('Chennai','Delhi');
+
+--12. Write a query to concatenate book title, author and display in the following format.
+--Book_Title_is_written_by_Author
+--Example: Let Us C_is_written_by_Yashavant Kanetkar
+--Hint: display unique books. Use “BOOK_WRITTEN_BY” as alias name.
+
+select concat(BOOK_TITLE,' is written by ',AUTHOR) AS 'BOOK_WRITTEN_BY' FROM LMS_BOOK_DETAILS;
+
+--13. Write a query to display the average price of books which is belonging to ‘JAVA’ category with alias name
+--“AVERAGEPRICE”.
+select avg(PRICE) AS 'AVERGAGEPRICE' FROM LMS_BOOK_DETAILS WHERE CATEGORY = 'JAVA';
+
+--14. Write a query to display the supplier id, supplier name and email of the suppliers who are all having gmail account.
+SELECT SUPPLIER_ID,SUPPLIER_NAME,EMAIL FROM LMS_SUPPLIERS_DETAILS WHERE EMAIL LIKE '%gmail.com';
+
+--16. Write a query to display the supplier id, supplier name and contact. If phone number is null then display ‘No’
+-- else display ‘Yes’ with alias name “PHONENUMAVAILABLE”. Hint: Use ISNULL.
+
+select SUPPLIER_ID,SUPPLIER_NAME,CONTACT, CASE WHEN CONTACT IS NULL THEN 'NO' WHEN CONTACT IS NOT NULL THEN 'YES' END AS 'PHONENUMBERAVAILABLE' FROM LMS_SUPPLIERS_DETAILS;
